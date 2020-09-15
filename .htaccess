@@ -39,28 +39,3 @@ BrowserMatch ^Mozilla/4 gzip-only-text/html
 BrowserMatch ^Mozilla/4\.0[678] no-gzip
 BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
-
-# Redirect www to non-www
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^www.la-chouette-agence\.com [NC]
-RewriteRule ^(.*)$ http://la-chouette-agence.com/$1 [L,R=301]
-
-# Redirect accueil.html to domain
-<IfModule mod_rewrite.c>
-RewriteCond %{THE_REQUEST} (.*)accueil\.html\ HTTP/
-RewriteRule ^(.*)accueil\.html$ $1 [R=301,NC,L]
-</IfModule> 
-
-# Remove .html (URLs)
-RewriteEngine On
-RewriteBase /
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
-RewriteRule ^ %1 [R=301,L]
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ $1 [R=301,L]
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^(.*)$ $1.html
-RedirectPermanent /accueil http://la-chouette-agence.com/
-
-DirectoryIndex accueil.html
